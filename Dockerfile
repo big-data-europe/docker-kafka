@@ -7,6 +7,8 @@
 
 FROM mesosphere/mesos:0.26.0-0.2.145.ubuntu1404
 
+MAINTAINER Juergen Jakobitsch <jakobitschj@semantic-web.at>
+
 RUN apt-get install -y wget unzip
 
 RUN wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip

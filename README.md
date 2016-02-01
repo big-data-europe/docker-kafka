@@ -37,7 +37,7 @@ Create a Marathon Application Setup in json like the one below
             "portMappings":[
                 {
                 "containerPort":7000,
-                "hostPort":7000,
+                "hostPort":0,
                 "protocol":"tcp"
                 }
             ]
@@ -47,10 +47,14 @@ Create a Marathon Application Setup in json like the one below
     "cpus": 0.5,
     "mem": 256,
     "ports": [7000],
-    "cmd": "./kafka-mesos.sh scheduler --api=http://localhost:7000 --zk=192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/kafka --master=zk://192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/mesos --storage=zk:/mesos-kafka-scheduler",
+    "cmd": "/usr/local/kafka-mesos/current/kafka-mesos.sh scheduler --api=http://$HOSTNAME:7000 --zk=192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/kafka --master=zk://192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/mesos --storage=zk:/mesos-kafka-scheduler",
     "instances": 1,
     "constraints": [["hostname", "UNIQUE"]]
 }
 ```
+Store the above json in a file [ e.g. marathon-kafka.json ] and run the app 
 
+    curl -X POST http://marathon.mesos.net:8080/v2/apps -d @./kafka-marathon-with-settings.json -H "content-type:application/json"
+
+The scheduler REST API is now available under ${mesos.slave.host}:${marathon.assignedPort}/api. Consult the README file under /usr/local/kafka-mesos/current/README of the bde2020/docker-kafka docker image or visit https://github.com/mesos/kafka .
 [1] https://github.com/mesos/kafka

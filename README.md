@@ -57,4 +57,5 @@ Store the above json in a file [ e.g. marathon-kafka.json ] and run the app
     curl -X POST http://marathon.mesos.net:8080/v2/apps -d @./marathon-kafka.json -H "content-type:application/json"
 
 The scheduler REST API is now available under ${mesos.slave.host}:${marathon.assignedPort}/api. Consult the README file under /usr/local/kafka-mesos/current/README of the bde2020/docker-kafka docker image or visit https://github.com/mesos/kafka .
+
 [1] https://github.com/mesos/kafka

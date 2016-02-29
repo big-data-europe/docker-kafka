@@ -1,24 +1,21 @@
-#echo "Downloading and installing kafka-mesos-0.9.4.0"
-#wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
-#mkdir -p /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
-#ln -s /usr/local/kafka-mesos/kafka-mesos-0.9.4.0 /usr/local/kafka-mesos/current
-#unzip kafka-mesos-0.9.4.0-distribution.zip -d /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/
-#echo "Consult /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/README for setting up and running kafka on mesos"
-
-FROM mesosphere/mesos:0.26.0-0.2.145.ubuntu1404
+FROM ubuntu:trusty
 
 MAINTAINER Juergen Jakobitsch <jakobitschj@semantic-web.at>
 
-RUN apt-get install -y wget unzip
+RUN apt-get install -y wget unzip software-properties-common vim lsof
 
-RUN wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
+RUN  add-apt-repository -y ppa:webupd8team/java
+RUN  apt-get update
+RUN  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN  apt-get -y install oracle-java8-installer
+RUN  apt-get -y install oracle-java8-set-default
 
-RUN mkdir -p /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
+RUN /bin/bash -c "source /etc/profile.d/jdk.sh"
 
-RUN ln -s /usr/local/kafka-mesos/kafka-mesos-0.9.4.0 /usr/local/kafka-mesos/current
+RUN rm -f /var/cache/oracle-jdk8-installer/jdk-8u72-linux-x64.tar.gz
 
-RUN unzip kafka-mesos-0.9.4.0-distribution.zip -d /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/
+ADD kafka_2.11-0.9.0.1.tgz /usr/local/apache-kafka/
 
-ENV MESOS_NATIVE_JAVA_LIBRARY /usr/lib/libmesos.so
-WORKDIR /usr/local/kafka-mesos/current
-EXPOSE 7000
+RUN ln -s /usr/local/apache-kafka/kafka_2.11-0.9.0.1 /usr/local/apache-kafka/current
+
+RUN rm -f /tmp/kafka_2.11-0.9.0.1.tgz

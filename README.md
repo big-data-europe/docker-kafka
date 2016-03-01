@@ -102,8 +102,17 @@ docker exec -t -i 8b797c0d80b3 /bin/bash
 ./bin/kafka-topics.sh --help
 ```
 
-* note that the following options are required to create a topic: --zookeeper --partitions --replication-factor --topic --create. the below command creates a sample topic with 3 partitions and a replication-factor of one.
+* note that the following options are required to create a topic: --zookeeper --partitions --replication-factor --topic --create. the below command creates a sample topic with 3 partitions and a replication-factor of one. note that the zookeeper url needs to be adapted to match the local installation. the zookeeper chroot is free to choose.
 
  ```bash
-./bin/kafka-topics.sh --create --topic sample_topic --zookeeper 192.168.88.219:2181/kafka --partitions 3 --replication-factor 1
+./bin/kafka-topics.sh --create --topic sampleTopic \
+ --zookeeper 192.168.88.219:2181/kafka \ 
+ --partitions 3 \
+ --replication-factor 1
+```
+
+* the topic will now show up with the list topics command
+
+ ```bash
+./bin/kafka-topics.sh --list --zookeeper 192.168.88.219:2181/kafka
 ```

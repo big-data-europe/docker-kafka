@@ -29,5 +29,6 @@ cd /usr/local/apache-kafka/current
 
  ```bash
 cd /usr/local/apache-kafka/current
-./bin/kafka-start-server.sh ./config/server.properties --override zookeeper.connect=192.168.88.219:2181,192.168.88.229:2181
+./bin/kafka-start-server.sh ./config/server.properties \
+--override zookeeper.connect=192.168.88.219:2181,192.168.88.229:2181
 ```

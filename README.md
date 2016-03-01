@@ -25,10 +25,12 @@ cd /usr/local/apache-kafka/current
 ./bin/kafka-start-server.sh ./config/server.properties
 ```
 
-* note that it is possible to override any setting using the --override command line parameter in case a hardcoded properties file is not desired.
+* note that it is possible to override any setting using the --override command line argument in case a hardcoded properties file is not desired.
 
  ```bash
 cd /usr/local/apache-kafka/current
 ./bin/kafka-start-server.sh ./config/server.properties \
 --override zookeeper.connect=192.168.88.219:2181,192.168.88.229:2181
 ```
+* note that depending on the environment this image is used in, it might be necessary to change override advertised.host.name and override advertised.host.port parameter. this can be achieved with above --override command line argument. 
+* for the complete documentation on available parameters refer to this document: http://kafka.apache.org/090/documentation.html#configuration

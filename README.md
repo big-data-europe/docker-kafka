@@ -134,3 +134,4 @@ docker exec -t -i 8b797c0d80b3 /bin/bash
 ```
 
 * for further details on the above examples refer to http://kafka.apache.org/090/documentation.html#quickstart_createtopic
+* note that you'll find Kafka's log directory on the hosting machines, if the Marathon setup from above has been used. checkout: /var/lib/bde/kafka-logs/ where there will be a directory like sampleTopic-{integer} depending on the partition the host has been assigned.

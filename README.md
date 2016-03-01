@@ -116,3 +116,21 @@ docker exec -t -i 8b797c0d80b3 /bin/bash
  ```bash
 ./bin/kafka-topics.sh --list --zookeeper 192.168.88.219:2181/kafka
 ```
+
+* kafka-console-producer.sh can be used to create some sample messages. start the producer by issueing the following command. note that this requires a running broker, which is available at the host's hostname and port 9092 if the above guidelines have been followed, the actual url of the Kafka broker needs to be adapted to the local environment.
+
+ ```bash
+./bin/kafka-console-producer.sh --topic sampleTopic --broker-list bigdata-one.example.com:9092
+```
+
+ After starting the producer simply type in some messages in the console and hit enter after every single message, we will consume these messages in the next step. Hit ctrl-c to stop the producer.
+ 
+* kafka-console-consumer.sh can be used to consume messages. Issue the following command to consume the messages created in the previous step. Again update the zookeeper url and the bootstrap-server url to the local environment.
+ 
+ ```bash
+ ./bin/kafka-console-consumer.sh --topic sampleTopic \
+  --zookeeper 192.168.88.219:2181/kafka \
+  --bootstrap-server bigdata-one.example:9092 --from-beginning
+```
+
+* for further details on the above examples refer to http://kafka.apache.org/090/documentation.html#quickstart_createtopic

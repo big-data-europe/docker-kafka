@@ -101,3 +101,9 @@ docker exec -t -i 8b797c0d80b3 /bin/bash
  ```bash
 ./bin/kafka-topics.sh --help
 ```
+
+* note that the following options are required to create a topic: --zookeeper --partitions --replication-factor --topic --create. the below command creates a sample topic with 3 partitions and a replication-factor of one.
+
+ ```bash
+./bin/kafka-topics.sh --create --topic sample_topic --zookeeper 192.168.88.219:2181/kafka --partitions 3 --replication-factor 1
+```

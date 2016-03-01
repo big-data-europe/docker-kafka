@@ -44,7 +44,7 @@ cd /usr/local/apache-kafka/current
 
 To start Kafka Docker image on Marathon:
 
-* Create a Marathon Application Setup in json like the one below and store it in a file (e.g. marathon-kafka.json)
+* Create a Marathon Application Setup in json like the one below, store it in a file (e.g. marathon-kafka.json) and post it to Marathon's v2/app endpoint.
 
  ```json
  {
@@ -80,3 +80,24 @@ To start Kafka Docker image on Marathon:
 * note that 9092 is the default port for Kafka brokers. For the above example it is necessary that mesos is configured to use this port range. see http://mesos.apache.org/documentation/latest/attributes-resources/ for details. 
 * note that in the above example Kafka's default log directory is mounted on the host. It is dependent on the specific use case if this is necessary or not.
 * note that the above example configures the docker image to run network in bridge mode resulting in the fact that Kafka brokers will allways (also after restart) be available at host.url:9092. for this to work properly it is necessary to override advertised.host.name and advertised.host.port in the Kafka Server startup command. If the above json is run inside marathon on http://bigdata-one.example.com:8080 the Kafka broker will be available at http://bigdata-one.example.com:9092. If the Mesos cluster contained a second slave, e.g. http://bigdata-two.example.com, the second Kafka broker would be available as http://bigdata-two.example.com:9092 upon scaling in Marathon, resulting in a consistent and forseeable deployment.
+
+To create a Kafka topic:
+
+* note that the following example assumes that the Kafka Docker image is deployed using Marathon like above and scaled to three servers, bigdata-one.example.com, bigdata-two.example.com and (you guessed it) bigdata-three.example.com.
+* log into the Kafka Docker image on one of these servers by issueing
+ 
+ ```bash
+docker ps
+```
+
+ on one of the hosts. This will expose the containerId of the running bde2020/docker-kafka container, e.g. 8b797c0d80b3.
+
+ ```bash
+docker exec -t -i 8b797c0d80b3 /bin/bash
+```
+
+ Inside the docker container cd into /usr/local/apache-kafka/current. Issue the following command to see available options for topic creation.
+
+ ```bash
+./bin/kafka-topics.sh --help
+```

@@ -28,4 +28,5 @@ COPY finish-step.sh /
 RUN ln -s /usr/local/apache-kafka/kafka_2.11-0.9.0.1 /app
 RUN ln -s /usr/local/apache-kafka/kafka_2.11-0.9.0.1/config /config
 
-
+ADD kafka-bin.py /app/bin/
+ADD kafka-init /app/bin/

@@ -135,3 +135,47 @@ docker exec -t -i 8b797c0d80b3 /bin/bash
 
 * for further details on the above examples refer to http://kafka.apache.org/090/documentation.html#quickstart_createtopic
 * note that you'll find Kafka's log directory on the hosting machines, if the Marathon setup from above has been used. checkout: /var/lib/bde/kafka-logs/ where there will be a directory like sampleTopic-{integer} depending on the partition the host has been assigned.
+
+To run the Kafka Image on the BDE Platform:
+
+* To run easily integrated with the BDE Platform this image provides the possibility to startup Apache Kafka and create a Kafka topic (in case it doesn't exist) using json config files.
+* These json files correspond to the many options that are available from Apache Kafka and are translated to Apache Kafka shell commands on the fly.
+* To run the Apache Kafka image using the BDE Platform, it is necessary to extend this image, adding to json files (see below) to the /config directory.
+  * The Dockerfile
+  ```bash
+  FROM bde2020/kafka
+  ADD kafka-startup.json /config/
+  ADD kafka-init.json /config/
+  ```
+  
+  * The kafka-startup.json (example, note that it is possible to override any option using the below template)
+  ```json
+  [
+   {
+     "sh":"/app/bin/kafka-server-start.sh",
+     "./config/server.properties":"",
+     "--override":"-Djava.net.preferIPv4Stack=true",
+     "--override":"zookeeper.connect=192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/kafka"
+   }
+  ]
+ ```
+ 
+ * The kafka-init.json (example, the options are dependent on the use case)
+ ```json
+ [
+   {
+     "sh":"/app/bin/kafka-topics.sh",
+     "--zookeeper":"192.168.88.219:2181,192.168.88.220:2181,192.168.88.221:2181/kafka",
+     "--create":"",
+     "--topic":"sampleTopic",
+     "--partitions":"3",
+     "--replication-factor":"1"
+   }
+ ]
+ ```
+ 
+* To startup the image
+
+```bash
+ /app/bin/kafka-init
+```

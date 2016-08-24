@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $ENABLE_INIT_DAEMON = "true" ]
+if [[ $ENABLE_INIT_DAEMON = "true" ]]
    then
        echo "Finish step ${INIT_DAEMON_STEP} in pipeline"
        while true; do

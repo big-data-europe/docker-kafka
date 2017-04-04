@@ -20,6 +20,7 @@ class KafkaBin:
             for command in kafka_commands:
                 command_call=[]
                 [command_call.extend([k,(os.environ[v[1:]] if v.startswith('$') else v)]) for k,v in command.items()]
+                command_call = [var for var in command_call if var]
                 if command_call[0] == "sh":
                     exit_code = sp.call(command_call, stderr=dev_null,close_fds=True)
                 else:

@@ -1,0 +1,60 @@
+version: "2"
+
+services:
+  sc6_zoo_1:
+    image: "sc6/zookeeper"
+    ports: 
+      - 31200:31200
+      - 31201:31201
+      - 31202:31202
+    container_name: sc6_zoo_1
+    command: "bash -c /startup"
+    hostname: "sc6_zoo_1"
+  sc6_zoo_2:
+    image: "sc6/zookeeper"
+    ports:
+      - 31200:31200
+      - 31201:31201
+      - 31202:31202
+    container_name: sc6_zoo_2
+    command: "bash -c /startup"
+    hostname: "sc6_zoo_2"
+  sc6_zoo_3:
+    image: "sc6/zookeeper"
+    ports:
+      - 31200:31200
+      - 31201:31201
+      - 31202:31202
+    container_name: sc6_zoo_3
+    command: "bash -c /startup"
+    hostname: "sc6_zoo_3"
+  sc6-kafka-1:
+    image: "sc6/kafka"
+    depends_on:
+      - sc6_zoo_1
+      - sc6_zoo_2
+      - sc6_zoo_3
+    ports:
+      - 9092:9092
+    command: "bash -c /app/bin/kafka-init"
+    hostname: "sc6-kafka-1"
+  sc6-kafka-2:
+    image: "sc6/kafka"
+    depends_on:
+      - sc6_zoo_1
+      - sc6_zoo_2
+      - sc6_zoo_3
+    ports:
+      - 9092:9092
+    command: "bash -c /app/bin/kafka-init"
+    hostname: "sc6-kafka-2"
+  sc6-kafka-3:
+    image: "sc6/kafka"
+    depends_on:
+      - sc6_zoo_1
+      - sc6_zoo_2
+      - sc6_zoo_3
+    ports:
+      - 9092:9092
+    command: "bash -c /app/bin/kafka-init"
+    hostname: "sc6-kafka-3"

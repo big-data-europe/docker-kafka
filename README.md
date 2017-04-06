@@ -179,3 +179,42 @@ To run the Kafka Image on the BDE Platform:
 ```bash
  /app/bin/kafka-init
 ```
+
+* To run a Apache Kafka Cluster on docker-swarm
+
+  * Setup a Zookeeper Cluster (https://github.com/big-data-europe/docker-zookeeper)
+  * Follow above instructions on extending the Apache Kafka Base Image
+  * Find a full example here : https://github.com/big-data-europe/pilot-sc6-cycle2/blob/master/docker-compose.yml
+  * Create the following docker-compose snippet within your docker-compose.yml
+  ```
+    your-kafka-1:
+      image: "your/kafka-extension"
+      depends_on:
+        - your_zookeeper_1
+        - your_zookeeper_2
+        - your_zookeeper_3
+      ports:
+        - 9092:9092
+      command: "bash -c /app/bin/kafka-init"
+      hostname: "your-kafka-1"    
+    your-kafka-2:
+      image: "your/kafka-extension"
+      depends_on:
+        - your_zookeeper_1
+        - your_zookeeper_2
+        - your_zookeeper_3
+      ports:
+        - 9092:9092
+      command: "bash -c /app/bin/kafka-init"
+      hostname: "your-kafka-2"
+    your-kafka-3:
+      image: "your/kafka-extension"
+      depends_on:
+        - your_zookeeper_1
+        - your_zookeeper_2
+        - your_zookeeper_3
+      ports:
+        - 9092:9092
+      command: "bash -c /app/bin/kafka-init"
+      hostname: "your-kafka-3"
+  ```

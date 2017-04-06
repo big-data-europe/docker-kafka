@@ -184,6 +184,7 @@ To run the Kafka Image on the BDE Platform:
 
   * Setup a Zookeeper Cluster (https://github.com/big-data-europe/docker-zookeeper)
   * Follow above instructions on extending the Apache Kafka Base Image
+  * Find a full example of an extension here : https://github.com/big-data-europe/pilot-sc6-cycle2/tree/master/sc6-kafka
   * Find a full example here : https://github.com/big-data-europe/pilot-sc6-cycle2/blob/master/docker-compose.yml
   * Create the following docker-compose snippet within your docker-compose.yml
   ```

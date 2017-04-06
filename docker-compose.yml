@@ -1,5 +1,7 @@
 version: "2"
 
+# Excerpt from this complete docker-compose.yml => https://github.com/big-data-europe/pilot-sc6-cycle2/blob/master/docker-compose.yml
+
 services:
   sc6_zoo_1:
     image: "sc6/zookeeper"

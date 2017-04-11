@@ -10,6 +10,8 @@ RUN apk add --update unzip wget curl bash python3 && rm -rf /var/cache/apk/*
 
 
 ADD download-kafka.sh /tmp/download-kafka.sh
+RUN mkdir -p /usr/local/apache-kafka
+
 RUN chmod a+x /tmp/download-kafka.sh && \
     sync && /tmp/download-kafka.sh && \
     tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /usr/local/apache-kafka/ && \

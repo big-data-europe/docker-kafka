@@ -6,17 +6,15 @@ MAINTAINER Gezim Sejdiu <g.sejdiu@gmail.com>
 ENV SCALA_VERSION=2.11
 ENV KAFKA_VERSION=0.10.2.0
 
-RUN apk upgrade
-RUN apk add --update bash python3 && rm -rf /var/cache/apk/*
+RUN apk add --update unzip wget curl bash python3 && rm -rf /var/cache/apk/*
 
-RUN apt-get update && \
-rm -rf /var/lib/apt/lists/* && \
-    apt-get clean && \
-    wget -q http://apache.mirrors.spacedump.net/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -O /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
-    tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /usr/local/apache-kafka/ && \
-    rm /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz
 
-RUN ln -s /usr/local/apache-kafka/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /usr/local/apache-kafka/current
+ADD download-kafka.sh /tmp/download-kafka.sh
+RUN chmod a+x /tmp/download-kafka.sh && \
+    sync && /tmp/download-kafka.sh && \
+    tar xfz /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /usr/local/apache-kafka/ && \
+    rm /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz && \
+    ln -s /usr/local/apache-kafka/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /usr/local/apache-kafka/current
 
 COPY wait-for-step.sh /
 COPY execute-step.sh /

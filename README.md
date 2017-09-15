@@ -3,6 +3,7 @@
 Docker image containing a standard Kafka distribution.
 
 Currently supported versions:
+* Kafka 0.11.0.1 for Scala 2.11 and Java 1.8.0_72
 * Kafka 0.10.2.0 for Scala 2.11 and Java 1.8.0_72
 * Kafka 0.9.0.1 for Scala 2.11 and Java 1.8.0_72
 

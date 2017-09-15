@@ -4,7 +4,7 @@ MAINTAINER Juergen Jakobitsch <jakobitschj@semantic-web.at>
 MAINTAINER Gezim Sejdiu <g.sejdiu@gmail.com>
 
 ENV SCALA_VERSION=2.11
-ENV KAFKA_VERSION=0.10.2.0
+ENV KAFKA_VERSION=0.11.0.1
 
 RUN apk add --update unzip wget curl bash python3 && rm -rf /var/cache/apk/*
 

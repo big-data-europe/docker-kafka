@@ -5,9 +5,17 @@
 KAFKA_STARTUP="kafka-startup.json"
 KAFKA_INIT="kafka-init.json"
 if [ -f "/config/$KAFKA_STARTUP" ]; then
-  /app/bin/kafka-bin.py "/config/$KAFKA_STARTUP"
   if [ -f "/config/$KAFKA_INIT" ]; then
+  (
+    # await kafka server at localhost
+    until nc -z localhost 9092 ;do
+        >&2 echo "localhost 9092 is yet unavailable - sleep 1"
+        sleep 1
+    done
+    echo "initiating kafka topics"
     /app/bin/kafka-bin.py "/config/$KAFKA_INIT"
+    ) &
   fi
+  exec /app/bin/kafka-bin.py "/config/$KAFKA_STARTUP"
 fi
 /finish-step.sh

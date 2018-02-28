@@ -1,0 +1,10 @@
+[
+ {
+   "sh":"/app/bin/kafka-server-start.sh",
+   "./config/server.properties":"",
+     "--override":[
+         "-Djava.net.preferIPv4Stack=true",
+         "zookeeper.connect=zookeeper:2181"
+         ]
+ }
+]

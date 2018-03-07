@@ -4,7 +4,8 @@
    "./config/server.properties":"",
      "--override":[
          "-Djava.net.preferIPv4Stack=true",
-         "zookeeper.connect=zookeeper:2181"
+         "zookeeper.connect=zookeeper:2181",
+         "listeners=PLAINTEXT://0.0.0.0:9092,SSL://0.0.0.0:9091"
          ]
  }
 ]

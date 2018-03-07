@@ -1,0 +1,10 @@
+[
+  {
+      "sh":"/app/bin/kafka-topics.sh",
+      "--zookeeper":"zookeeper:2181",
+      "--create":"",
+      "--topic":"sampleTopic",
+      "--partitions":"\"3\"",
+      "--replication-factor":"\"1\""
+  }
+]

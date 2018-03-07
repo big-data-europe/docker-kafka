@@ -16,6 +16,51 @@ To start the Kafka Docker image:
 
     docker run -i -t bde2020/docker-kafka /bin/bash
     
+### Configure Kafka
+To configure kafka we require to be provided with 2 JSON files; kafka-startup.json and kafka-init.json. Both files are expected to contain a JSON array of objects where each object represents a shell command to be executed. The kafka-startup.json should contain (at least) the command to start kafka within the docker. 
+
+There is a python script that will pick up these files when the container starts and convert the JSON objects to shell commands and execute them.
+
+As an example of the kafka-startup.json file:
+```
+[
+ {
+   "sh":"/app/bin/kafka-server-start.sh",
+   "./config/server.properties":"",
+     "--override":[
+         "-Djava.net.preferIPv4Stack=true",
+         "zookeeper.connect=zookeeper:2181"
+         ]
+ }
+]
+```
+which will, by the python script, be converted to 
+```
+sh /app/bin/kafka-server-start.sh ./config/server.properties --override -Djava.nete.preferIPv4Stack=true --override zookeeper.connect=zookeeper:2181
+```
+
+An example for the kafka-init.json would be:
+```
+[
+  {
+      "sh":"/app/bin/kafka-topics.sh",
+      "--zookeeper":"zookeeper:2181",
+      "--create":"",
+      "--topic":"sampleTopic",
+      "--partitions":"\"3\"",
+      "--replication-factor":"\"1\""
+  }
+]
+
+```
+again ending up running the following shell command:
+```
+sh /app/bin/kafka-topics.sh --zookeeper zookeeper:2181 --create --topic sampleTopic --partitions: 3 --replication-factor 1
+```
+And also again there can be other commands chained to this one by adding objects to the JSON array.
+
+### Building the image
+
 To build the Kafka Docker image:
 
  ```bash
